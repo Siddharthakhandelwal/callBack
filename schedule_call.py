@@ -59,10 +59,16 @@ def check_and_trigger_calls():
             # Trigger only if time matches exactly (within 60 seconds)
             if abs((now_utc - call_back_time).total_seconds()) <= 60:
                 send_to_api(row)
-                time.sleep(60)
+
 
     except Exception as e:
         print(f"Error fetching or processing data: {e}")
 
 if __name__ == "__main__":
-    check_and_trigger_calls()
+    while True:
+        try:
+            check_and_trigger_calls()
+        except Exception as e:
+            print(f"Error in loop: {e}")
+        time.sleep(60)
+
